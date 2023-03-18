@@ -1,0 +1,29 @@
+.accueil{
+    display: flex;
+}
+
+.accueil_friend_list{
+    width: 30%;
+    height: 100%;
+    padding: 20px;
+    height: calc(100vh - 50px);
+    position: fixed
+}
+
+.accueil_feed{
+    width: 70%;
+    height: 100%;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+}
+
+/* en dessous de 800px de largeur accueil_friend_list passe en display none */
+@media screen and (max-width: 800px) {
+    .accueil_friend_list{
+        display: none;
+    }
+    .accueil_feed{
+        width: 100%;
+    }
+}
