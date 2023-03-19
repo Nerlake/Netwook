@@ -6,7 +6,7 @@ export default function SignIn() {
     <div className='signin'>
         <div className="signin_container">
             <div className="signin_logo">NetWook</div>
-                            <p className='signin_description'>Welcome to your social network</p>
+              <p className='signin_description'>Welcome to your social network</p>
             <div className="signin_form">
 
                 <input type="text" placeholder='Email' className='signin_input'/>

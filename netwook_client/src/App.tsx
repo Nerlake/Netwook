@@ -2,9 +2,9 @@ import { useState } from 'react'
 import './App.css'
 import Navbar from './components/navbar/Navbar'
 import Accueil from './pages/Accueil/Accueil'
+import ProfilPage from './pages/profilpage/ProfilPage'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
