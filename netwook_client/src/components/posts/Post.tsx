@@ -1,3 +1,4 @@
+import { Comment, ThumbUp } from '@mui/icons-material'
 import React from 'react'
 import leo from '../../assets/leo.jpg'
 import './post.css'
@@ -17,12 +18,12 @@ export default function Post() {
                 <p>Hey guys, I'm looking for a new job. If you know someone who is hiring, please let me know.</p>
             </div>
             <div className="post_stats">
-                <span className='post_stats_like'>2 people like it</span>
-                <span className='post_stats_comment'>1 comment</span>
+                <div className='post_stats_item'><span className='post_stats_number'>2 </span> <ThumbUp className='stat_icon'/></div>
+                <div className='post_stats_item'><span className='post_stats_number'>1 </span><Comment className='stat_icon'/></div>
             </div>
             <div className="post_footer">
-                    <span className='post_footer_button'>Like</span>
-                    <span className='post_footer_button'>Comment</span>
+                    <span className='post_footer_button active_item'><ThumbUp/> Like </span>
+                    <span className='post_footer_button'><Comment/> Comment</span>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import './navbar.css'
 import leo from '../../assets/leo.jpg'
+import { Chat, Notifications } from '@mui/icons-material'
 
 export default function Navbar() {
   return (
@@ -12,8 +13,8 @@ export default function Navbar() {
             </div>
             <div className="navbar_list_menu">
                 <a className="navbar_menu_item">Feed</a>
-                <a className="navbar_menu_item">Notifications</a>
-                <a className="navbar_menu_item">Messages</a>
+                <a className="navbar_menu_item"><Notifications/></a>
+                <a className="navbar_menu_item"><Chat/></a>
                 <a className="navbar_menu_item_logo"><img src={leo} alt="profil picture"/></a>
             </div>
         </div>

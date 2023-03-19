@@ -72,8 +72,16 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    margin: 0 10px 0 20px;
 }
 
 .navbar_menu_item_logo img:hover{
     cursor: pointer;
+}
+
+/* en dessous d'une largeur de 600px navbar_searchbar_container passe en display none */
+@media screen and (max-width: 600px) {
+    .navbar_searchbar_container{
+        display: none;
+    }
 }
