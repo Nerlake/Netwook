@@ -19,6 +19,11 @@
     font-size: 1.5rem;
     font-weight: 600;
     color: #fff;
+    text-decoration: none;
+}
+
+.navbar_logo:visited{
+    text-decoration: none;
 }
 
 .navbar_logo:hover{

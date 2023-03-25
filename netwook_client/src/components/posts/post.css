@@ -81,6 +81,10 @@
     margin-left: 5px;
 }
 
+.post_stats_number::selection {
+    background-color: transparent;
+}
+
 .stat_icon{
     height: 40px;
     transform: translateY(-1px);
@@ -97,6 +101,10 @@
     justify-content: flex-start;
     margin-top: 10px;
     gap: 10px;
+}
+
+.post_footer_button::selection{
+    background-color: transparent;
 }
 
 .post_footer_button:hover{

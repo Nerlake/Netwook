@@ -10,7 +10,9 @@ export default function ProfilPage() {
       <Navbar/>
       <div className="page_container">
         <Profil/>
+        <div className="feed_content">
         <Feed/>
+        </div>
       </div>
     </div>
   )

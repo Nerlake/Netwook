@@ -2,3 +2,7 @@
     padding-top: 50px;
     height: calc(100vh - 50px);
 }
+
+.feed_content {
+    padding: 20px;
+}

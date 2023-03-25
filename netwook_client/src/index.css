@@ -10,3 +10,8 @@ body{
     font-family: 'Poppins', sans-serif;
     background-color: #f8f8f8;
 }
+
+.link{
+    text-decoration: none;
+    color: inherit;
+}
