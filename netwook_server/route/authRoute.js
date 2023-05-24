@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 //REGISTER
 router.post("/register", async (req, res) => {
@@ -19,7 +20,10 @@ router.post("/register", async (req, res) => {
 
         //SAVE USER AND RETURN RESPONSE
         const user = await newUser.save()
-        res.status(200).json(user)
+        const payload = { user };
+        const secretKey = 'netwook_secret_key';
+        const token = jwt.sign(payload, secretKey, { expiresIn: '24h' });
+        res.status(200).json({ user, session_token: token })
     } catch (error) {
         console.error(error)
         res.status(500).json(error)
@@ -35,7 +39,15 @@ router.post("/login", async (req, res) => {
         } else {
             const validPassword = await bcrypt.compare(req.body.password, user.password);
             // const validPassword = req.body.password === user.password;
-            !validPassword ? res.status(400).json("Nom d'utilisateur ou mot de passe incorrect") : res.status(200).json(user)
+            if (!validPassword) {
+                res.status(400).json("Nom d'utilisateur ou mot de passe incorrect");
+            }
+            else {
+                const payload = { user };
+                const secretKey = 'netwook_secret_key';
+                const token = jwt.sign(payload, secretKey, { expiresIn: '24h' });
+                res.status(200).json({ user, session_token: token })
+            }
         }
     } catch (error) {
         console.error(error)
