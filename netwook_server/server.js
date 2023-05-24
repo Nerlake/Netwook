@@ -1,0 +1,28 @@
+require('dotenv').config();
+const express = require('express');
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+const mongoose = require("mongoose");
+
+const authRoute = require('./route/authRoute');
+const userRoute = require('./route/userRoute');
+
+const port = process.env.PORT || 8000;
+
+url = "mongodb://localhost:27017/netwook_bdd"
+mongoose.connect(url)
+    .then(() => {
+        console.log('Connecté à la base de données avec succès');
+    })
+    .catch((err) => {
+        console.error('Erreur de connexion à la base de données :', err);
+    });
+
+
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+
+app.listen(port, () => {
+    console.log(`Application is currently running on port ${port}`);
+});
