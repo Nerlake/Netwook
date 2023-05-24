@@ -14,11 +14,12 @@ const router = createBrowserRouter([
   { path: '/profil', element: <ProfilPage /> },
   { path: '/login', element: <SignIn /> },
   { path: '/register', element: <Register /> },
-    { path: '/map', element: <Map /> },
+  { path: '/map', element: <Map /> },
   { path: '*', element: <div>404</div> },
 ])
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,
