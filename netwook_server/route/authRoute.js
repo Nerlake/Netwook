@@ -15,8 +15,9 @@ router.post("/register", async (req, res) => {
             username: req.body.username,
             email: req.body.email,
             password: hashedPassword,
+            firstName: req.body.firstName,
+            name: req.body.name,
         })
-        console.log(req.body)
 
         //SAVE USER AND RETURN RESPONSE
         const user = await newUser.save()
@@ -35,12 +36,12 @@ router.post("/login", async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email })
         if (!user) {
-            res.status(404).json("Nom d'utilisateur ou mot de passe incorrect");
+            res.status(404).json({ ERROR: "BADLOGIN" });
         } else {
             const validPassword = await bcrypt.compare(req.body.password, user.password);
             // const validPassword = req.body.password === user.password;
             if (!validPassword) {
-                res.status(400).json("Nom d'utilisateur ou mot de passe incorrect");
+                res.status(400).json({ ERROR: "BADLOGIN" });
             }
             else {
                 const payload = { user };

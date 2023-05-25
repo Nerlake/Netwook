@@ -19,6 +19,16 @@ const UserSchema = mongoose.Schema({
         require: true,
         min: 6,
     },
+    firstName: {
+        type: String,
+        require: true,
+        max: 50,
+    },
+    name: {
+        type: String,
+        require: true,
+        max: 50,
+    },
     profilePicture: {
         type: String,
         default: "user.png",
