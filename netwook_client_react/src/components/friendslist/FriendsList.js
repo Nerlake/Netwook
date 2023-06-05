@@ -29,7 +29,7 @@ export default function FriendsList() {
         <div className="friendslist_list">
           {
             friendsList?.map((friend) => (
-              <Friend key={friend._id} data={friend} />
+              <Friend key={friend?._id} data={friend} />
             ))
           }
         </div>

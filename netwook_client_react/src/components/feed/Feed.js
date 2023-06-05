@@ -19,7 +19,7 @@ export default function Feed() {
 
   useEffect(() => {
     if (location.pathname === "/") {
-      api.get('api/posts/timeline/' + userDetails._id)
+      api.get('api/posts/timeline/' + userDetails?._id)
         .then(res => {
           setPosts(res.data)
         })
@@ -36,7 +36,7 @@ export default function Feed() {
           console.log(err);
         })
     }
-  }, [id, location.pathname, userDetails._id])
+  }, [id, location.pathname, userDetails?._id])
 
 
   return (

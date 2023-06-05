@@ -22,7 +22,7 @@ export default function Profil({ userId, type }) {
       .then(res => {
         setUserDetails(res.data)
         setFriendsList(res.data.friends)
-        setIsFriend(res.data.friends.includes(myProfile._id))
+        setIsFriend(res.data.friends.includes(myProfile?._id))
       }
       )
       .catch(err => console.log(err))
@@ -31,18 +31,18 @@ export default function Profil({ userId, type }) {
 
   function addRemoveFriend() {
     if (!isFriend) {
-      api.put('/api/users/' + id + '/follow', { userId: myProfile._id })
+      api.put('/api/users/' + id + '/follow', { userId: myProfile?._id })
         .then(res => {
           setIsFriend(true)
-          setFriendsList([...friendsList, myProfile._id])
+          setFriendsList([...friendsList, myProfile?._id])
 
         })
         .catch(err => console.log(err))
     } else {
-      api.put('/api/users/' + id + '/unfollow', { userId: myProfile._id })
+      api.put('/api/users/' + id + '/unfollow', { userId: myProfile?._id })
         .then(res => {
           setIsFriend(false)
-          setFriendsList(friendsList.filter((friend) => friend !== myProfile._id))
+          setFriendsList(friendsList.filter((friend) => friend !== myProfile?._id))
         })
         .catch(err => console.log(err))
     }

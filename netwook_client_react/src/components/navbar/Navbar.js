@@ -87,7 +87,7 @@ export default function Navbar() {
         (<div className="result_container" id="result_container">
           {
             result?.map((user) => (
-              <Link to={"/" + user._id} className="link" key={user._id}>
+              <Link to={"/" + user?._id} className="link" key={user?._id}>
                 <div className="result">
                   <img src={"/assets/" + user.profilePicture} alt="profilpicture" className='img_result' />
                   <span className="result_name">{user.firstName} {user.name}</span>
