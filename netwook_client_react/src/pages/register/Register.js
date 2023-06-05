@@ -23,7 +23,6 @@ export default function Register() {
       .then(res => {
         dispatch(setUser(res.data.user));
         localStorage.setItem('session_token', res?.data?.session_token);
-        console.log(res.data);
         window.location.reload();
       })
       .catch(err => {

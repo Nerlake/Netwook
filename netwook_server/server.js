@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const authRoute = require('./route/authRoute');
 const userRoute = require('./route/userRoute');
+const postRoute = require('./route/postRoute');
 
 const port = process.env.PORT || 8000;
 
@@ -23,6 +24,7 @@ mongoose.connect(url)
 app.use(cors());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
 
 app.listen(port, () => {
     console.log(`Application is currently running on port ${port}`);
