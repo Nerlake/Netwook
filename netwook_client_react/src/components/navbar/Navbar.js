@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './navbar.css'
 import leo from '../../assets/leo.jpg'
-import { Chat, Map, Notifications } from '@mui/icons-material'
+import { Chat, Logout, Map, Message, Notifications } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeUser } from '../../redux/userSlice'
+import { removeConversation, removeUser } from '../../redux/userSlice'
 import api from '../../api/api'
 
 export default function Navbar() {
@@ -72,13 +72,14 @@ export default function Navbar() {
           <Link to={"/"} className="link"> <a className="navbar_menu_item">Feed</a></Link>
           {/* <Link to={"/"} className="link"><a className="navbar_menu_item"><Notifications/></a></Link> */}
           <Link to={"/map"} className="link"><a className="navbar_menu_item"><Map /></a></Link>
-
+          <Link to={"/messages"} className="link"><a className="navbar_menu_item"><Message /></a></Link>
           <Link to={"/login"} className="link" onClick={() => {
-
             dispatch(removeUser())
+            dispatch(removeConversation())
             localStorage.removeItem('session_token')
             window.location.reload()
-          }}><a className="navbar_menu_item"><Chat /></a></Link>
+          }}><a className="navbar_menu_item"><Logout
+          /></a></Link>
           <Link to={"/" + userDetails?._id} className="link"><a className="navbar_menu_item_logo"><img src={"/assets/" + userDetails?.profilePicture} alt="profilpicture" /></a></Link>
         </div>
       </div>

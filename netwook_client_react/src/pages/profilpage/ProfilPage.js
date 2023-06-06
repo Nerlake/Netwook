@@ -7,15 +7,10 @@ import { useSelector } from 'react-redux'
 
 export default function ProfilPage({ userId }) {
 
-  const [id, setId] = useState()
-  const [type, setType] = useState("")
-
-  // import de redux
-  const userDetails = useSelector((state) => state.user)
 
 
 
-  console.log(userId)
+
   return (
     <div className="App">
       <Navbar />

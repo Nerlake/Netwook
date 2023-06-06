@@ -127,6 +127,12 @@ router.get("/profile/:id", async (req, res) => {
             post.name = user.name;
             updatedTimeline.push(post);
         }
+
+        // trie les posts par date de création
+        updatedTimeline.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+
         res.status(200).json(updatedTimeline)
     } catch (error) {
         res.status(500).json(error);

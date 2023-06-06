@@ -6,6 +6,7 @@ import ProfilPage from './pages/profilpage/ProfilPage'
 import Register from './pages/register/Register'
 import Map from './components/map/Map'
 import { useSelector } from 'react-redux'
+import Messages from './pages/messages/Messages'
 
 
 
@@ -33,6 +34,7 @@ export default function RouterPage() {
         { path: '/login', element: !isLogged ? <SignIn /> : <App /> },
         { path: '/register', element: !isLogged ? <Register /> : <App /> },
         { path: '/map', element: isLogged ? <Map /> : <SignIn /> },
+        { path: "/messages", element: isLogged ? <Messages /> : <SignIn /> },
         { path: '*', element: <div>404</div> },
     ])
     return (

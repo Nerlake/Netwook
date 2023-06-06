@@ -3,8 +3,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import leo from '../../assets/leo.jpg'
 import './friend.css'
+import { changeConversation } from '../../redux/userSlice'
+import { useDispatch } from 'react-redux'
 
 export default function Friend({ data }) {
+
+
+  const dispatch = useDispatch()
+
+
   return (
     <div className='friend'>
       <div className="friend_container">
@@ -15,7 +22,7 @@ export default function Friend({ data }) {
           </div>
         </Link>
         <div className="friend_actions">
-          <Link to={"/register"}><button className='friend_button'><Message /></button></Link>
+          <Link to={"/messages"}><button className='friend_button' onClick={() => dispatch(changeConversation(data))}><Message /></button></Link>
         </div>
       </div>
     </div>

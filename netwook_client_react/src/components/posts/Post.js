@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import './post.css'
 import api from '../../api/api'
 import { useSelector } from 'react-redux'
+import { format } from 'timeago.js'
 
 export default function Post({ post }) {
 
@@ -38,6 +39,35 @@ export default function Post({ post }) {
         checkLike();
     }, [post?.likes, userDetails?._id])
 
+    function timeSince(date) {
+
+        var seconds = Math.floor((new Date() - date) / 1000);
+
+        var interval = seconds / 31536000;
+
+        if (interval > 1) {
+            return Math.floor(interval) + " years";
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+            return Math.floor(interval) + " months";
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+            return Math.floor(interval) + " days";
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+            return Math.floor(interval) + " hours";
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+            return Math.floor(interval) + " minutes";
+        }
+        return Math.floor(seconds) + " seconds";
+    }
+    var aDay = 24 * 60 * 60 * 1000;
+
 
     return (
         <div className='post'>
@@ -47,7 +77,7 @@ export default function Post({ post }) {
 
                     <div className="post_header_info">
                         <Link to={"/" + post?.userId} className="link"><span className='post_username'>{`${post.firstName} ${post.name}`}</span>                </Link>
-                        <span className='post_time'>{post.createdAt}</span>
+                        <span className='post_time'>{format(post.createdAt)}</span>
                     </div>
 
                 </div>

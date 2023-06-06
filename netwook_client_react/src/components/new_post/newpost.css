@@ -37,3 +37,20 @@
     margin-left: 10px;
 
 }
+
+.button_envoyer{
+    background-color: rgb(36, 36, 154);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: none;   
+    border-radius: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.button_envoyer:hover{
+    background-color: rgb(77, 77, 189);
+    cursor: pointer;
+}
