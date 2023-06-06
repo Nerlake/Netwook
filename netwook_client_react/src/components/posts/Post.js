@@ -12,8 +12,11 @@ export default function Post({ post }) {
 
     const [likeNumber, setLikeNumber] = useState(post?.likes?.length);
     const [isLiked, setIsLiked] = useState(false);
+    const [isCommentActivate, setIsCommentActivate] = useState(false);
 
     const [commentNumber, setCommentNumber] = useState(post?.comments?.length || 0);
+    const [myComment, setMyComment] = useState('');
+    const [comments, setComments] = useState(post?.comments || []);
 
     const userDetails = useSelector((state) => state.user)
 
@@ -35,38 +38,42 @@ export default function Post({ post }) {
         }
     }
 
+    function addComment() {
+        if (myComment !== '') {
+            api.put("/api/posts/" + post?._id + "/comment", { userId: userDetails?._id, content: myComment, firstName: userDetails?.firstName, name: userDetails?.name, profilePicture: userDetails?.profilePicture })
+                .then(res => {
+                    setCommentNumber(commentNumber + 1);
+                    setMyComment('');
+                    const newComments = comments;
+                    newComments.push({ userId: userDetails?._id, content: myComment, firstName: userDetails?.firstName, name: userDetails?.name, profilePicture: userDetails?.profilePicture });
+                    setComments(newComments);
+                })
+        }
+        else {
+            alert('Veuillez écrire un commentaire')
+        }
+    }
+
+    function checkAndSendComment(e) {
+        if (e.key === 'Enter') {
+            addComment();
+        }
+    }
+
+    // function getComments() {
+    //     api.get("/api/posts/" + post?._id + "/comments")
+    //         .then(res => {
+    //             setComments(res.data);
+    //         })
+    // }
+
+
+
     useEffect(() => {
         checkLike();
     }, [post?.likes, userDetails?._id])
 
-    function timeSince(date) {
 
-        var seconds = Math.floor((new Date() - date) / 1000);
-
-        var interval = seconds / 31536000;
-
-        if (interval > 1) {
-            return Math.floor(interval) + " years";
-        }
-        interval = seconds / 2592000;
-        if (interval > 1) {
-            return Math.floor(interval) + " months";
-        }
-        interval = seconds / 86400;
-        if (interval > 1) {
-            return Math.floor(interval) + " days";
-        }
-        interval = seconds / 3600;
-        if (interval > 1) {
-            return Math.floor(interval) + " hours";
-        }
-        interval = seconds / 60;
-        if (interval > 1) {
-            return Math.floor(interval) + " minutes";
-        }
-        return Math.floor(seconds) + " seconds";
-    }
-    var aDay = 24 * 60 * 60 * 1000;
 
 
     return (
@@ -90,9 +97,27 @@ export default function Post({ post }) {
                 </div>
                 <div className="post_footer">
                     <span className={`post_footer_button ${isLiked && "active_item"}`} onClick={addOrRemoveLike}><ThumbUp /> Like </span>
-                    <span className='post_footer_button'><Comment /> Comment</span>
+                    <span className='post_footer_button' onClick={() => setIsCommentActivate(true)}><Comment /> Comment</span>
                 </div>
+
             </div>
+            {isCommentActivate ?
+                <div className="comments">
+                    <div className="comments_header">
+                        <img src={"/assets/" + userDetails?.profilePicture} alt="profilePicture" className="comments_img" />
+                        <input type="text" placeholder="Ecrivez un commentaire" className="comments_header_input" onKeyUp={(e) => checkAndSendComment(e)} onChange={(e) => setMyComment(e.target.value)} value={myComment} />
+                    </div>
+                    {comments?.map((comment) => (
+                        <div className="comments_body">
+                            <img src={"/assets/" + comment?.profilePicture} alt="profilePicture" className="comments_img" />
+                            <div className="comments_body_info">
+                                <span className="comments_body_username">{`${comment?.firstName} ${comment?.name}`}</span>
+                                <span className="comments_body_text">{comment?.content}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                : null}
         </div>
     )
 }

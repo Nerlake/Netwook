@@ -16,6 +16,12 @@ export default function Feed() {
 
   const [posts, setPosts] = useState([])
 
+  // toujours mettre le scroll au top au chargement de la page
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+
 
   useEffect(() => {
     if (location.pathname === "/") {

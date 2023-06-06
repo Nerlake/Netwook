@@ -139,5 +139,26 @@ router.get("/profile/:id", async (req, res) => {
     }
 })
 
+// ajouter un commentaire
+router.put("/:id/comment", async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        await post.updateOne({ $push: { comments: req.body } })
+        res.status(200).json("The comment has been added");
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
+// recupére les commentaires d'un post
+router.get("/:id/comment", async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        res.status(200).json(post.comments);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
 
 module.exports = router; 

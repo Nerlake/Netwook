@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import leo from '../../assets/leo.jpg'
 import './profil.css'
 import background from '../../assets/background.jpg'
-import { Edit, PersonAdd, PersonRemove } from '@mui/icons-material'
+import { Check, Close, Edit, PersonAdd, PersonRemove, Send } from '@mui/icons-material'
 import { useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import api from '../../api/api'
@@ -15,19 +15,25 @@ export default function Profil({ userId, type }) {
   const [friendsList, setFriendsList] = useState([])
   const [isFriend, setIsFriend] = useState(false);
   const [isEditing, setIsEditing] = useState(false)
+  const [description, setDescription] = useState("")
 
   const { id } = useParams();
 
-  useEffect(() => {
+  function getProfil() {
     api.get('/api/users/' + id)
       .then(res => {
         setUserDetails(res.data)
         setFriendsList(res.data.friends)
         setIsFriend(res.data.friends.includes(myProfile?._id))
+        setDescription(res.data.desc)
       }
       )
       .catch(err => console.log(err))
-  }, [id, myProfile])
+  }
+
+  useEffect(() => {
+    getProfil()
+  }, [id, myProfile?._id])
 
 
   function addRemoveFriend() {
@@ -49,6 +55,19 @@ export default function Profil({ userId, type }) {
     }
   }
 
+  function sendAndClose() {
+    api.put('/api/users/' + myProfile._id, { desc: description, userId: myProfile._id })
+      .then(res => {
+        setIsEditing(false)
+        getProfil()
+      }
+      )
+      .catch(err => console.log(err))
+
+  }
+
+
+
 
 
 
@@ -63,9 +82,19 @@ export default function Profil({ userId, type }) {
         <img src={background} alt="background" className="profil_header_background" />
         <img src={"/assets/" + userDetails?.profilePicture} alt="profilpicture" className="profil_header_photo" />
         <div className="profil_infos">
-          <div className="profil_header_name">{`${userDetails?.firstName} ${userDetails?.name}`} {myProfile?._id === id ? <button className='profil_header_button' onClick={() => setIsEditing(true)}><Edit /></button> : !isFriend ? <button className='profil_header_button' onClick={addRemoveFriend}><PersonAdd /></button> : <button className='profil_header_button' onClick={addRemoveFriend}><PersonRemove /></button>} </div>
+          <div className="profil_header_name">{`${userDetails?.firstName} ${userDetails?.name}`}
+
+            {myProfile?._id === id && isEditing === false ?
+              <button className='profil_header_button' onClick={() => setIsEditing(true)}><Edit /></button>
+              :
+              myProfile?._id === id && isEditing === true
+                ?
+                <><button className='profil_header_button' onClick={() => setIsEditing(false)}><Close /></button> <button className='profil_header_button' onClick={() => sendAndClose()}><Check /></button></>
+                :
+                null
+            } {myProfile?._id === id ? null : !isFriend ? <button className='profil_header_button' onClick={addRemoveFriend}><PersonAdd /></button> : <button className='profil_header_button' onClick={addRemoveFriend}><PersonRemove /></button>} </div>
           <div className="profil_header_stats">{friendsList.length} friend(s)</div>
-          <div className="profil_header_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</div>
+          {isEditing ? <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} /> : <div className="profil_header_description">{userDetails?.desc}</div>}
         </div>
       </div>
     </div>
