@@ -38,7 +38,7 @@ export default function Profil({ userId, type }) {
 
   function addRemoveFriend() {
     if (!isFriend) {
-      api.put('/api/users/' + id + '/follow', { userId: myProfile?._id })
+      api.put('/api/users/' + id + '/follow')
         .then(res => {
           setIsFriend(true)
           setFriendsList([...friendsList, myProfile?._id])
@@ -46,7 +46,7 @@ export default function Profil({ userId, type }) {
         })
         .catch(err => console.log(err))
     } else {
-      api.put('/api/users/' + id + '/unfollow', { userId: myProfile?._id })
+      api.put('/api/users/' + id + '/unfollow')
         .then(res => {
           setIsFriend(false)
           setFriendsList(friendsList.filter((friend) => friend !== myProfile?._id))
@@ -56,7 +56,7 @@ export default function Profil({ userId, type }) {
   }
 
   function sendAndClose() {
-    api.put('/api/users/' + myProfile._id, { desc: description, userId: myProfile._id })
+    api.put('/api/users/' + myProfile._id, { desc: description })
       .then(res => {
         setIsEditing(false)
         getProfil()

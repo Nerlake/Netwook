@@ -22,7 +22,7 @@ export default function Post({ post }) {
 
 
     function addOrRemoveLike() {
-        api.put("/api/posts/" + post?._id + "/like", { userId: userDetails?._id })
+        api.put("/api/posts/" + post?._id + "/like")
             .then(res => {
                 if (res.data === "SUCCESLIKED")
                     setLikeNumber(likeNumber + 1);
@@ -40,7 +40,7 @@ export default function Post({ post }) {
 
     function addComment() {
         if (myComment !== '') {
-            api.put("/api/posts/" + post?._id + "/comment", { userId: userDetails?._id, content: myComment, firstName: userDetails?.firstName, name: userDetails?.name, profilePicture: userDetails?.profilePicture })
+            api.put("/api/posts/" + post?._id + "/comment", { content: myComment, firstName: userDetails?.firstName, name: userDetails?.name, profilePicture: userDetails?.profilePicture })
                 .then(res => {
                     setCommentNumber(commentNumber + 1);
                     setMyComment('');

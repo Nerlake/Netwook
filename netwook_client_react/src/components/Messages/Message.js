@@ -48,7 +48,6 @@ export default function Message({ userId }) {
     function sendMessage() {
         if (message !== '') {
             api.post('/api/messages/create', {
-                userId: user._id,
                 content: message,
                 recipientId: recipient?._id
             })

@@ -17,7 +17,6 @@ export default function NewPost({ posts, setPosts }) {
       return
     }
     api.post("/api/posts", {
-      userId: userDetails?._id,
       desc: post
     }
     )

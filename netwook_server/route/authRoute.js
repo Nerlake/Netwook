@@ -57,19 +57,19 @@ router.post("/login", async (req, res) => {
 })
 
 //SUPPRIMER UN UTILISATEUR
-router.delete("/:id", async (req, res) => {
-    if (req.body.userId === req.params.id || req.body.isAdmin) {
-        try {
-            await User.findByIdAndDelete(req.params.id)
-            res.status(200).json("Le compte a été supprimé avec succès")
-        } catch (error) {
-            console.error(error)
-            res.status(500).json(error)
-        }
-    } else {
-        res.status(403).json("Vous ne pouvez supprimer que votre compte")
-    }
-})
+// router.delete("/:id", async (req, res) => {
+//     if (req.body.userId === req.params.id || req.body.isAdmin) {
+//         try {
+//             await User.findByIdAndDelete(req.params.id)
+//             res.status(200).json("Le compte a été supprimé avec succès")
+//         } catch (error) {
+//             console.error(error)
+//             res.status(500).json(error)
+//         }
+//     } else {
+//         res.status(403).json("Vous ne pouvez supprimer que votre compte")
+//     }
+// })
 
 
 

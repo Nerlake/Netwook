@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-        if (post.userId === req.body.userId) {
+        if (post.userId === req.id) {
             await post.updateOne({ $set: req.body });
             res.status(200).json("The post has been updated");
         } else {
@@ -84,7 +84,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-        if (post.userId === req.body.userId) {
+        if (post.userId === req.id) {
             await post.deleteOne();
             res.status(200).json("The post has been deleted");
         } else {
@@ -100,11 +100,11 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id/like", async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
-        if (!post.likes.includes(req.body.userId)) {
-            await post.updateOne({ $push: { likes: req.body.userId } })
+        if (!post.likes.includes(req.id)) {
+            await post.updateOne({ $push: { likes: req.id } })
             res.status(200).json("SUCCESLIKED")
         } else {
-            await post.updateOne({ $pull: { likes: req.body.userId } })
+            await post.updateOne({ $pull: { likes: req.id } })
             res.status(200).json("SUCCESDISLIKED")
         }
     } catch (error) {

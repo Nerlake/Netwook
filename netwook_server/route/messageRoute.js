@@ -5,7 +5,7 @@ const User = require("../model/User");
 router.post("/create", async (req, res) => {
     try {
         const newMessage = new Message({
-            userId: req.body.userId,
+            userId: req.auth.id,
             recipientId: req.body.recipientId,
             content: req.body.content,
         })
@@ -19,6 +19,7 @@ router.post("/create", async (req, res) => {
 
 router.get("/conversation/:userId/:recipientId", async (req, res) => {
     try {
+        if (req.id !== req.params.userId) return res.status(403).json("Vous n'êtes pas autorisé à accéder à cette conversation")
         const messages = await Message.find({
             $or: [
                 { $and: [{ userId: req.params.userId }, { recipientId: req.params.recipientId }] },

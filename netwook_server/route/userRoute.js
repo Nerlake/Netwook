@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
 
 // Mettre à jour un utilisateur
 router.put("/:id", async (req, res) => {
-    if (req.body.userId === req.params.id || req.body.isAdmin) {
+    if (req.id === req.params.id || req.auth.isAdmin) {
         // Si l'utilisateur veut mettre à jour son mot de passe
         if (req.body.password) {
             try {
@@ -55,7 +55,7 @@ router.put("/:id", async (req, res) => {
 //DELETE
 
 router.delete("/:id", async (req, res) => {
-    if (req.body.userId === req.params.id || req.body.isAdmin) {
+    if (req.id === req.params.id || req.auth.isAdmin) {
         try {
             const user = await User.findByIdAndDelete(req.params.id)
             res.status(200).json("Account has been deleted")
@@ -70,12 +70,12 @@ router.delete("/:id", async (req, res) => {
 //FOLLOW 
 
 router.put("/:id/follow", async (req, res) => {
-    if (req.body.userId !== req.params.id) {
+    if (req.id !== req.params.id) {
         try {
             const user = await User.findById(req.params.id);
-            const currentUser = await User.findById(req.body.userId);
-            if (!user.friends.includes(req.body.userId)) {
-                await user.updateOne({ $push: { friends: req.body.userId } });
+            const currentUser = await User.findById(req.id);
+            if (!user.friends.includes(req.id)) {
+                await user.updateOne({ $push: { friends: req.id } });
                 await currentUser.updateOne({ $push: { friends: req.params.id } });
                 res.status(200).json("User has been followed");
             } else {
@@ -94,12 +94,12 @@ router.put("/:id/follow", async (req, res) => {
 
 
 router.put("/:id/unfollow", async (req, res) => {
-    if (req.body.userId !== req.params.id) {
+    if (req.id !== req.params.id) {
         try {
             const user = await User.findById(req.params.id);
-            const currentUser = await User.findById(req.body.userId);
-            if (user.friends.includes(req.body.userId)) {
-                await user.updateOne({ $pull: { friends: req.body.userId } });
+            const currentUser = await User.findById(req.id);
+            if (user.friends.includes(req.id)) {
+                await user.updateOne({ $pull: { friends: req.id } });
                 await currentUser.updateOne({ $pull: { friends: req.params.id } });
                 res.status(200).json("User has been unfollowed");
             } else {
