@@ -183,3 +183,15 @@ background-color: #f0f0f0;
     padding: 20px;
     margin-left: 10px;
 }
+
+.delete_button{
+border: none;
+background-color: inherit;
+position: relative;
+top: 0px;
+right: 0px;
+}
+
+.delete_button:hover{
+    cursor: pointer;
+}

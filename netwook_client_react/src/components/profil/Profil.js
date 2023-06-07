@@ -79,7 +79,7 @@ export default function Profil({ userId, type }) {
   return (
     <div className='profil'>
       <div className="profil_header">
-        <img src={background} alt="background" className="profil_header_background" />
+        <img src={"/assets/" + userDetails?.coverPicture} alt="background" className="profil_header_background" />
         <img src={"/assets/" + userDetails?.profilePicture} alt="profilpicture" className="profil_header_photo" />
         <div className="profil_infos">
           <div className="profil_header_name">{`${userDetails?.firstName} ${userDetails?.name}`}

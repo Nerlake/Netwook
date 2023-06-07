@@ -1,4 +1,4 @@
-import { Comment, ThumbUp } from '@mui/icons-material'
+import { Comment, Delete, ThumbUp } from '@mui/icons-material'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './post.css'
@@ -6,7 +6,7 @@ import api from '../../api/api'
 import { useSelector } from 'react-redux'
 import { format } from 'timeago.js'
 
-export default function Post({ post }) {
+export default function Post({ post, setPosts, posts }) {
 
 
 
@@ -60,14 +60,24 @@ export default function Post({ post }) {
         }
     }
 
-    // function getComments() {
-    //     api.get("/api/posts/" + post?._id + "/comments")
-    //         .then(res => {
-    //             setComments(res.data);
-    //         })
-    // }
+    function deletePost() {
+        // demande de confirmation
+        if (!window.confirm("Voulez-vous vraiment supprimer ce post ?")) {
+            return;
+        }
 
+        api.delete("/api/posts/" + post?._id)
+            .then(res => {
+                // retire le post du state posts
+                const newPosts = posts.filter((p) => p._id !== post._id);
+                setPosts(newPosts);
 
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+    }
 
     useEffect(() => {
         checkLike();
@@ -86,6 +96,7 @@ export default function Post({ post }) {
                         <Link to={"/" + post?.userId} className="link"><span className='post_username'>{`${post.firstName} ${post.name}`}</span>                </Link>
                         <span className='post_time'>{format(post.createdAt)}</span>
                     </div>
+                    {userDetails?.isAdmin || userDetails?._id === post?.userId ? <button className='delete_button' onClick={() => deletePost()}><Delete /></button> : null}
 
                 </div>
                 <div className="post_body">

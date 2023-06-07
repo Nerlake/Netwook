@@ -49,8 +49,8 @@ export default function Feed() {
     <div className='feed'>
       <div className="feed_container">
         {location.pathname === "/" && <NewPost posts={posts} setPosts={setPosts} />}
-        {posts.map((post) => (
-          <Post key={post?._id} post={post} />
+        {posts?.map((post) => (
+          <Post key={post?._id} post={post} setPosts={setPosts} posts={posts} />
         ))}
       </div>
     </div>
