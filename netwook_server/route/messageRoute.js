@@ -5,7 +5,7 @@ const User = require("../model/User");
 router.post("/create", async (req, res) => {
     try {
         const newMessage = new Message({
-            userId: req.auth.id,
+            userId: req.id,
             recipientId: req.body.recipientId,
             content: req.body.content,
         })
