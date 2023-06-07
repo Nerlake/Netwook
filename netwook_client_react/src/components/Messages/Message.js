@@ -92,6 +92,21 @@ export default function Message({ userId }) {
     }, [conversation])
 
 
+    // relance la requete de recupération des messages toutes les 2 secondes
+    useEffect(() => {
+        const interval = setInterval(() => {
+            api.get('/api/messages/conversation/' + user?._id + "/" + recipient?._id)
+                .then((res) => {
+                    setConversation(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                }
+                )
+        }, 2000);
+        return () => clearInterval(interval);
+    }, [user?._id, recipient?._id])
+
 
 
 
