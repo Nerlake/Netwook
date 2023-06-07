@@ -17,7 +17,7 @@ export default function Friend({ data }) {
       <div className="friend_container">
         <Link to={"/" + data?._id} className="link">
           <div className="friend_info">
-            <img src={"/assets/" + data?.profilePicture} alt="profilepicture" className='friend_picture' />
+            <img src={data?.profilePicture} alt="profilepicture" className='friend_picture' />
             <span className='friend_name'>{`${data?.firstName} ${data?.name}`}</span>
           </div>
         </Link>

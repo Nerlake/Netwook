@@ -90,7 +90,7 @@ export default function Post({ post, setPosts, posts }) {
         <div className='post'>
             <div className="post_container">
                 <div className="post_header">
-                    <img src={"/assets/" + post.profilePicture} alt="profilpicture" className="post_image" />
+                    <img src={post.profilePicture} alt="profilpicture" className="post_image" />
 
                     <div className="post_header_info">
                         <Link to={"/" + post?.userId} className="link"><span className='post_username'>{`${post.firstName} ${post.name}`}</span>                </Link>
@@ -115,12 +115,12 @@ export default function Post({ post, setPosts, posts }) {
             {isCommentActivate ?
                 <div className="comments">
                     <div className="comments_header">
-                        <img src={"/assets/" + userDetails?.profilePicture} alt="profilePicture" className="comments_img" />
+                        <img src={userDetails?.profilePicture} alt="profilePicture" className="comments_img" />
                         <input type="text" placeholder="Ecrivez un commentaire" className="comments_header_input" onKeyUp={(e) => checkAndSendComment(e)} onChange={(e) => setMyComment(e.target.value)} value={myComment} />
                     </div>
                     {comments?.map((comment) => (
                         <div className="comments_body">
-                            <img src={"/assets/" + comment?.profilePicture} alt="profilePicture" className="comments_img" />
+                            <img src={comment?.profilePicture} alt="profilePicture" className="comments_img" />
                             <div className="comments_body_info">
                                 <span className="comments_body_username">{`${comment?.firstName} ${comment?.name}`}</span>
                                 <span className="comments_body_text">{comment?.content}</span>

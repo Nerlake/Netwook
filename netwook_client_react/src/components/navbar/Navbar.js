@@ -80,7 +80,7 @@ export default function Navbar() {
             window.location.reload()
           }}><a className="navbar_menu_item"><Logout
           /></a></Link>
-          <Link to={"/" + userDetails?._id} className="link"><a className="navbar_menu_item_logo"><img src={"/assets/" + userDetails?.profilePicture} alt="profilpicture" /></a></Link>
+          <Link to={"/" + userDetails?._id} className="link"><a className="navbar_menu_item_logo"><img src={userDetails?.profilePicture} alt="profilpicture" /></a></Link>
         </div>
       </div>
 
@@ -90,7 +90,7 @@ export default function Navbar() {
             result?.map((user) => (
               <Link to={"/" + user?._id} className="link" key={user?._id}>
                 <div className="result">
-                  <img src={"/assets/" + user.profilePicture} alt="profilpicture" className='img_result' />
+                  <img src={user.profilePicture} alt="profilpicture" className='img_result' />
                   <span className="result_name">{user.firstName} {user.name}</span>
                 </div>
               </Link>

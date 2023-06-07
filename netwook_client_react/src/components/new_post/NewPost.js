@@ -46,7 +46,7 @@ export default function NewPost({ posts, setPosts }) {
     <div className='newpost'>
       <div className="newpost_container">
         <div className="newpost_header">
-          <img src={"/assets/" + userDetails?.profilePicture} alt="profilePicture" className="new_post_image" />
+          <img src={userDetails?.profilePicture} alt="profilePicture" className="new_post_image" />
           <input type="text" placeholder="What's on your mind?" className="new_post_input" value={post} onChange={(e) => setPost(e.target.value)} />
           <button onClick={submitPost} className='button_envoyer'>Send</button>
         </div>

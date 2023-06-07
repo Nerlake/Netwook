@@ -115,7 +115,7 @@ export default function Message({ userId }) {
             {recipient === null ? <span className="message_top_name">Sélectionnez une conversation</span> : (
                 <>
                     <div className="message_top">
-                        <img src={"/assets/" + recipient?.profilePicture} alt="profilePicture" className="message_top_img" />
+                        <img src={recipient?.profilePicture} alt="profilePicture" className="message_top_img" />
                         <span className="message_top_name">{recipient?.firstName}</span>
                     </div>
                     <div className="conversation_container">

@@ -25,7 +25,7 @@ export default function BulleMessage({ content }) {
                     <div className="conversation">
                         <div className="conversation_header">
                             <div className="conversation_header_left_part">
-                                <img src={"/assets/" + recipient?.profilePicture} alt="profilePicture" className="message_top_img" />
+                                <img src={recipient?.profilePicture} alt="profilePicture" className="message_top_img" />
                             </div>
                             <div className="conversation_header_right_part">
                                 <span className="conversation_name">{recipient?.firstName} {recipient?.name}</span>
@@ -40,7 +40,7 @@ export default function BulleMessage({ content }) {
                     <div className="conversation_right">
                         <div className="conversation_header_right">
                             <div className="conversation_header_right_left_part">
-                                <img src={"/assets/" + user?.profilePicture} alt="profilePicture" className="message_top_img" />
+                                <img src={user?.profilePicture} alt="profilePicture" className="message_top_img" />
                             </div>
                             <div className="conversation_header_right_right_part">
                                 <span className="conversation_name">{user?.firstName} {user?.name}</span>

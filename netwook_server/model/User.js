@@ -31,11 +31,11 @@ const UserSchema = mongoose.Schema({
     },
     profilePicture: {
         type: String,
-        default: "user.png",
+        default: "https://cdn-icons-png.flaticon.com/512/21/21104.png",
     },
     coverPicture: {
         type: String,
-        default: "1.jpeg",
+        default: "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg",
     },
     followers: {
         type: Array,

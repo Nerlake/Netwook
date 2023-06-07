@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import leo from '../../assets/leo.jpg'
 import './profil.css'
-import background from '../../assets/background.jpg'
 import { Check, Close, Edit, PersonAdd, PersonRemove, Send } from '@mui/icons-material'
 import { useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
@@ -16,6 +14,8 @@ export default function Profil({ userId, type }) {
   const [isFriend, setIsFriend] = useState(false);
   const [isEditing, setIsEditing] = useState(false)
   const [description, setDescription] = useState("")
+  const [backgroundPicture, setBackgroundPicture] = useState("")
+  const [profilePicture, setProfilePicture] = useState("")
 
   const { id } = useParams();
 
@@ -26,6 +26,8 @@ export default function Profil({ userId, type }) {
         setFriendsList(res.data.friends)
         setIsFriend(res.data.friends.includes(myProfile?._id))
         setDescription(res.data.desc)
+        setBackgroundPicture(res.data.coverPicture)
+        setProfilePicture(res.data.profilePicture)
       }
       )
       .catch(err => console.log(err))
@@ -56,7 +58,7 @@ export default function Profil({ userId, type }) {
   }
 
   function sendAndClose() {
-    api.put('/api/users/' + myProfile._id, { desc: description })
+    api.put('/api/users/' + myProfile._id, { desc: description, coverPicture: backgroundPicture, profilePicture: profilePicture })
       .then(res => {
         setIsEditing(false)
         getProfil()
@@ -79,8 +81,8 @@ export default function Profil({ userId, type }) {
   return (
     <div className='profil'>
       <div className="profil_header">
-        <img src={"/assets/" + userDetails?.coverPicture} alt="background" className="profil_header_background" />
-        <img src={"/assets/" + userDetails?.profilePicture} alt="profilpicture" className="profil_header_photo" />
+        <img src={userDetails?.coverPicture} alt="background" className="profil_header_background" />
+        <img src={userDetails?.profilePicture} alt="profilpicture" className="profil_header_photo" />
         <div className="profil_infos">
           <div className="profil_header_name">{`${userDetails?.firstName} ${userDetails?.name}`}
 
@@ -92,9 +94,20 @@ export default function Profil({ userId, type }) {
                 <><button className='profil_header_button' onClick={() => setIsEditing(false)}><Close /></button> <button className='profil_header_button' onClick={() => sendAndClose()}><Check /></button></>
                 :
                 null
-            } {myProfile?._id === id ? null : !isFriend ? <button className='profil_header_button' onClick={addRemoveFriend}><PersonAdd /></button> : <button className='profil_header_button' onClick={addRemoveFriend}><PersonRemove /></button>} </div>
+            } {
+              myProfile?._id === id
+                ?
+                null
+                :
+                !isFriend
+                  ?
+                  <button className='profil_header_button' onClick={addRemoveFriend}><PersonAdd /></button>
+                  :
+                  <button className='profil_header_button' onClick={addRemoveFriend}><PersonRemove /></button>} </div>
           <div className="profil_header_stats">{friendsList.length} friend(s)</div>
-          {isEditing ? <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} /> : <div className="profil_header_description">{userDetails?.desc}</div>}
+          {isEditing ? <><span>Profil picture(link only):</span> <input type="text" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} /></> : null}
+          {isEditing ? <><span>Description:</span><input type="text" value={description} onChange={(e) => setDescription(e.target.value)} /></> : <div className="profil_header_description">{userDetails?.desc}</div>}
+          {isEditing ? <><span>Cover picture(link only):</span><input type="text" value={backgroundPicture} onChange={(e) => setBackgroundPicture(e.target.value)} /></> : null}
         </div>
       </div>
     </div>
