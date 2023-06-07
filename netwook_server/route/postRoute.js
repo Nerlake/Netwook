@@ -54,6 +54,7 @@ router.get("/timeline/:id", async (req, res) => {
 // CREATE
 
 router.post("/", async (req, res) => {
+    req.body.userId = req.id;
     const newPost = await new Post(req.body)
     try {
         const savedPost = await newPost.save();
