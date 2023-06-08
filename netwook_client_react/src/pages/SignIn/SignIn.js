@@ -10,6 +10,8 @@ export default function SignIn() {
 
   // const user = useSelector((state) => state.user)
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch()
 
 
@@ -23,6 +25,7 @@ export default function SignIn() {
       .then(res => {
         dispatch(setUser(res.data.user));
         localStorage.setItem('session_token', res?.data?.session_token);
+        navigate('/');
         window.location.reload();
       })
       .catch(err => {
@@ -35,7 +38,8 @@ export default function SignIn() {
   return (
     <div className='signin'>
       <div className="signin_container">
-        <div className="signin_logo">NetWook</div>
+        {/* <div className="signin_logo">Sociamix</div> */}
+        <img src="/logo.png" className='signin_logo' alt='logo' />
         <p className='signin_description'>Welcome to your social network</p>
         <div className="signin_form">
           {/* <button onClick={() => dispatch(setUser())}>dispatch</button> */}

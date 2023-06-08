@@ -5,6 +5,8 @@ import './post.css'
 import api from '../../api/api'
 import { useSelector } from 'react-redux'
 import { format } from 'timeago.js'
+import Badge from '../badge/Badge'
+import { Tooltip } from '@mui/material'
 
 export default function Post({ post, setPosts, posts }) {
 
@@ -90,13 +92,15 @@ export default function Post({ post, setPosts, posts }) {
         <div className='post'>
             <div className="post_container">
                 <div className="post_header">
-                    <img src={post.profilePicture} alt="profilpicture" className="post_image" />
+                    <div className="post_header_left">
+                        <img src={post.profilePicture} alt="profilpicture" className="post_image" />
 
-                    <div className="post_header_info">
-                        <Link to={"/" + post?.userId} className="link"><span className='post_username'>{`${post.firstName} ${post.name}`}</span>                </Link>
-                        <span className='post_time'>{format(post.createdAt)}</span>
+                        <div className="post_header_info">
+                            <Link to={"/" + post?.userId} className="link"><span className='post_username'>{`${post.firstName} ${post.name}`}</span>   <Badge fontSize={"16px"} statut={post?.isAdmin} />             </Link>
+                            <span className='post_time'>{format(post.createdAt)}</span>
+                        </div>
                     </div>
-                    {userDetails?.isAdmin || userDetails?._id === post?.userId ? <button className='delete_button' onClick={() => deletePost()}><Delete /></button> : null}
+                    {userDetails?.isAdmin || userDetails?._id === post?.userId ? <Tooltip title="Delete this post" placement='top'><button className='delete_button' onClick={() => deletePost()}><Delete /></button></Tooltip> : null}
 
                 </div>
                 <div className="post_body">
@@ -122,7 +126,7 @@ export default function Post({ post, setPosts, posts }) {
                         <div className="comments_body">
                             <img src={comment?.profilePicture} alt="profilePicture" className="comments_img" />
                             <div className="comments_body_info">
-                                <span className="comments_body_username">{`${comment?.firstName} ${comment?.name}`}</span>
+                                <span className="comments_body_username">{`${comment?.firstName} ${comment?.name}`} <Badge fontSize={"16px"} statut={comment?.isAdmin} />  {/*<button className='delete_button' style={{ transform: "traslateY(5px)" }}><Tooltip title="Delete this comment" placement='top'><Delete /></Tooltip></button>*/}</span>
                                 <span className="comments_body_text">{comment?.content}</span>
                             </div>
                         </div>

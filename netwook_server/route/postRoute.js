@@ -36,6 +36,7 @@ router.get("/timeline/:id", async (req, res) => {
             post.profilePicture = user.profilePicture;
             post.firstName = user.firstName;
             post.name = user.name;
+            post.isAdmin = user.isAdmin;
             updatedTimeline.push(post);
         }
 

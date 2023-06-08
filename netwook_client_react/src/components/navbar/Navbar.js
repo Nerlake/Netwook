@@ -64,7 +64,7 @@ export default function Navbar() {
   return (
     <div className='navbar'>
       <div className="navbar_container">
-        <Link to={"/"} className="link"><span className="navbar_logo">EmotionAchat</span></Link>
+        <Link to={"/"} className="link"><span className="navbar_logo">Sociamix</span></Link>
         <div className="navbar_searchbar_container">
           <input type="text" className="navbar_searchbar" id='searchbar' placeholder="Search" value={searchbar} onChange={(e) => setSearchbar(e.target.value)} />
         </div>

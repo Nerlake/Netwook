@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './profil.css'
-import { Check, Close, Edit, PersonAdd, PersonRemove, Send } from '@mui/icons-material'
+import { Check, Close, Edit, PersonAdd, PersonRemove } from '@mui/icons-material'
 import { useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import api from '../../api/api'
+import Badge from '../badge/Badge'
+
 
 export default function Profil({ userId, type }) {
 
@@ -16,6 +18,7 @@ export default function Profil({ userId, type }) {
   const [description, setDescription] = useState("")
   const [backgroundPicture, setBackgroundPicture] = useState("")
   const [profilePicture, setProfilePicture] = useState("")
+  const [isEditable, setIsEditable] = useState(false)
 
   const { id } = useParams();
 
@@ -38,6 +41,25 @@ export default function Profil({ userId, type }) {
   }, [id, myProfile?._id])
 
 
+  useEffect(() => {
+    if (myProfile?._id === id) {
+      setIsEditable(true)
+      console.log('my profile')
+    }
+    else if (myProfile?.isAdmin) {
+      setIsEditable(true)
+      console.log('admin')
+    }
+    else {
+      setIsEditable(false)
+      console.log('nothing')
+    }
+  }, [myProfile?._id, id, myProfile?.isAdmin])
+
+
+
+
+
   function addRemoveFriend() {
     if (!isFriend) {
       api.put('/api/users/' + id + '/follow')
@@ -58,7 +80,7 @@ export default function Profil({ userId, type }) {
   }
 
   function sendAndClose() {
-    api.put('/api/users/' + myProfile._id, { desc: description, coverPicture: backgroundPicture, profilePicture: profilePicture })
+    api.put('/api/users/' + id, { desc: description, coverPicture: backgroundPicture, profilePicture: profilePicture })
       .then(res => {
         setIsEditing(false)
         getProfil()
@@ -72,12 +94,6 @@ export default function Profil({ userId, type }) {
 
 
 
-
-
-
-
-
-
   return (
     <div className='profil'>
       <div className="profil_header">
@@ -85,11 +101,12 @@ export default function Profil({ userId, type }) {
         <img src={userDetails?.profilePicture} alt="profilpicture" className="profil_header_photo" />
         <div className="profil_infos">
           <div className="profil_header_name">{`${userDetails?.firstName} ${userDetails?.name}`}
+            <Badge fontSize={"25px"} margin={"0 35px 0 10px"} statut={userDetails?.isAdmin} />
 
-            {myProfile?._id === id && isEditing === false ?
+            {isEditable && isEditing === false ?
               <button className='profil_header_button' onClick={() => setIsEditing(true)}><Edit /></button>
               :
-              myProfile?._id === id && isEditing === true
+              isEditable && isEditing === true
                 ?
                 <><button className='profil_header_button' onClick={() => setIsEditing(false)}><Close /></button> <button className='profil_header_button' onClick={() => sendAndClose()}><Check /></button></>
                 :

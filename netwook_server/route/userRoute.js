@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
 
 // Mettre à jour un utilisateur
 router.put("/:id", async (req, res) => {
-    if (req.id === req.params.id || req.auth.isAdmin) {
+    if (req.id === req.params.id || req.isAdmin) {
         // Si l'utilisateur veut mettre à jour son mot de passe
         if (req.body.password) {
             try {

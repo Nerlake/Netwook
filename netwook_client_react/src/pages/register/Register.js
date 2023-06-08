@@ -10,7 +10,7 @@ export default function Register() {
   const dispatch = useDispatch()
 
   const [userInfos, setUserInfos] = useState({
-    username: '',
+    // username: '',
     firstName: '',
     name: '',
     email: '',
@@ -34,10 +34,10 @@ export default function Register() {
   return (
     <div className='register'>
       <div className="register_container">
-        <div className="register_logo">NetWook</div>
+        <div className="register_logo">Sociamix</div>
         <p className='register_description'>Welcome to your social network</p>
         <div className="register_form">
-          <input type="text" placeholder='Username' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, username: e.currentTarget.value })} />
+          {/* <input type="text" placeholder='Username' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, username: e.currentTarget.value })} /> */}
           <input type="text" placeholder='First name' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, firstName: e.currentTarget.value })} />
           <input type="text" placeholder='Name' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, name: e.currentTarget.value })} />
           <input type="text" placeholder='Email' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, email: e.currentTarget.value })} />
