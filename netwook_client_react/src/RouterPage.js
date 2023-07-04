@@ -8,6 +8,7 @@ import Map from './components/map/Map'
 import { useSelector } from 'react-redux'
 import Messages from './pages/messages/Messages'
 import FriendsRequests from './pages/FriendsRequests/FriendsRequests'
+import Error from './components/error/Error'
 
 
 
@@ -37,7 +38,7 @@ export default function RouterPage() {
         // { path: '/map', element: isLogged ? <Map /> : <SignIn /> },
         { path: "/messages", element: isLogged ? <Messages /> : <SignIn /> },
         { path: "/friendsRequests", element: isLogged ? <FriendsRequests /> : <SignIn /> },
-        { path: '*', element: <div>404</div> },
+        { path: '*', element: <Error error={404} /> },
     ])
     return (
         <RouterProvider router={router} />

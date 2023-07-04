@@ -66,7 +66,7 @@ export default function Navbar() {
       <div className="navbar_container">
         <Link to={"/"} className="link"><span className="navbar_logo">Sociamix</span></Link>
         <div className="navbar_searchbar_container">
-          <input type="text" className="navbar_searchbar" id='searchbar' placeholder="Search" value={searchbar} onChange={(e) => setSearchbar(e.target.value)} />
+          <input type="text" className="navbar_searchbar" id='searchbar' placeholder="Search" value={searchbar} onChange={(e) => setSearchbar(e.target.value)} autoComplete={false} />
         </div>
         <div className="navbar_list_menu">
           <Link to={"/"} className="link"> <a className="navbar_menu_item">Feed</a></Link>
