@@ -52,7 +52,7 @@ export default function NewPost({ posts, setPosts }) {
         </div>
         <div className="newpost_footer">
           <div className="newpost_footer_option">
-            <h3>Photo/Video</h3>
+            {/* <h3>Photo/Video</h3> */}
           </div>
         </div>
       </div>

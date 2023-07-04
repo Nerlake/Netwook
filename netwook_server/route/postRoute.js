@@ -117,29 +117,79 @@ router.put("/:id/like", async (req, res) => {
 //GET ALL POSTS BY USER 
 router.get("/profile/:id", async (req, res) => {
     try {
-        console.log(req.params.id)
-        const posts = await Post.find({ userId: req.params.id })
-        const updatedTimeline = [];
+        const userCible = await User.findById(req.params.id);
+        if (userCible.isPrivate && (userCible.friends.includes(req.id) || userCible._id == req.id)) {
 
-        for (var post of posts) {
-            var user = await User.findById(post.userId);
-            post = post.toObject();
-            post.profilePicture = user.profilePicture;
-            post.firstName = user.firstName;
-            post.name = user.name;
-            updatedTimeline.push(post);
+
+            const posts = await Post.find({ userId: req.params.id })
+            const updatedTimeline = [];
+
+            for (var post of posts) {
+                var user = await User.findById(post.userId);
+                post = post.toObject();
+                post.profilePicture = user.profilePicture;
+                post.firstName = user.firstName;
+                post.name = user.name;
+                updatedTimeline.push(post);
+            }
+
+            // trie les posts par date de création
+            updatedTimeline.sort((a, b) => {
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+
+            res.status(200).json(updatedTimeline)
+        }
+        else if (userCible.isPrivate !== true) {
+            const posts = await Post.find({ userId: req.params.id })
+            const updatedTimeline = [];
+
+            for (var post of posts) {
+                var user = await User.findById(post.userId);
+                post = post.toObject();
+                post.profilePicture = user.profilePicture;
+                post.firstName = user.firstName;
+                post.name = user.name;
+                updatedTimeline.push(post);
+            }
+
+            // trie les posts par date de création
+            updatedTimeline.sort((a, b) => {
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+
+            res.status(200).json(updatedTimeline)
+        }
+        else {
+            res.status(403).json("This user is private")
         }
 
-        // trie les posts par date de création
-        updatedTimeline.sort((a, b) => {
-            return new Date(b.createdAt) - new Date(a.createdAt);
-        });
 
-        res.status(200).json(updatedTimeline)
     } catch (error) {
         res.status(500).json(error);
     }
 })
+
+
+// GET LAST POST BY USER
+router.get("/last/:id", async (req, res) => {
+    try {
+        const posts = await Post.find({ userId: req.params.id })
+        // prend le dernier post
+        const lastPost = posts[posts.length - 1];
+        var user = await User.findById(req.params.id);
+        var lastPostObject = lastPost.toObject();
+        lastPostObject.profilePicture = user.profilePicture;
+        lastPostObject.firstName = user.firstName;
+        lastPostObject.name = user.name;
+        // le renvoie
+        res.status(200).json(lastPostObject)
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
+
 
 // ajouter un commentaire
 router.put("/:id/comment", async (req, res) => {

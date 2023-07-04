@@ -6,9 +6,10 @@ import { useParams } from 'react-router-dom'
 import api from '../../api/api'
 import Badge from '../badge/Badge'
 import { updateUser } from '../../redux/userSlice'
+import Error from '../error/Error'
 
 
-export default function Profil({ userId, type }) {
+export default function Profil({ userId, type, setIsPrivate, isPrivate, isFriend, setIsFriend }) {
 
   const myProfile = useSelector((state) => state.user)
 
@@ -17,7 +18,7 @@ export default function Profil({ userId, type }) {
 
   const [userDetails, setUserDetails] = useState(undefined)
   const [friendsList, setFriendsList] = useState([])
-  const [isFriend, setIsFriend] = useState(false);
+
   const [isEditing, setIsEditing] = useState(false)
   const [description, setDescription] = useState("")
   const [backgroundPicture, setBackgroundPicture] = useState("")
@@ -25,9 +26,21 @@ export default function Profil({ userId, type }) {
   const [isEditable, setIsEditable] = useState(false)
   const [isSending, setIsSending] = useState(false)
   const [isPending, setIsPending] = useState(false)
+  const [isRealID, setIsRealID] = useState(false)
 
 
   const { id } = useParams();
+
+  // si id ne contient pas au moins 1 lettre et 1 chiffre et sa longueur total est minimum 20 caractère on met is real id a false
+  useEffect(() => {
+    if (id.match(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/) && id.length >= 20) {
+      setIsRealID(true)
+    }
+    else {
+      setIsRealID(false)
+    }
+  }, [id])
+
 
   function getProfil() {
     api.get('/api/users/' + id)
@@ -40,6 +53,7 @@ export default function Profil({ userId, type }) {
         setProfilePicture(res.data.profilePicture)
         setIsSending(res.data.friendsRequestReceived.includes(myProfile?._id))
         setIsPending(res.data.friendsRequestSent.includes(myProfile?._id))
+        setIsPrivate(res.data.isPrivate)
       }
       )
       .catch(err => console.log(err))
@@ -84,7 +98,7 @@ export default function Profil({ userId, type }) {
   }
 
   function sendAndClose() {
-    api.put('/api/users/' + id, { desc: description, coverPicture: backgroundPicture, profilePicture: profilePicture })
+    api.put('/api/users/' + id, { desc: description, coverPicture: backgroundPicture, profilePicture: profilePicture, isPrivate: isPrivate })
       .then(res => {
         setIsEditing(false)
         getProfil()
@@ -134,55 +148,65 @@ export default function Profil({ userId, type }) {
       .catch((err) => console.log(err))
   }
 
+  const handleCheckboxChange = (event) => {
+    setIsPrivate(event.target.checked);
+  };
+
 
 
 
 
   return (
     <div className='profil'>
-      <div className="profil_header">
-        <img src={userDetails?.coverPicture} alt="background" className="profil_header_background" />
-        <img src={userDetails?.profilePicture} alt="profilpicture" className="profil_header_photo" />
-        <div className="profil_infos">
-          <div className="profil_header_name">{`${userDetails?.firstName} ${userDetails?.name}`}
-            <Badge fontSize={"25px"} margin={"0 35px 0 10px"} statut={userDetails?.isAdmin} />
+      {isRealID ?
 
-            <div className='profil_actions'>
+        <div className="profil_header">
+          <img src={userDetails?.coverPicture} alt="background" className="profil_header_background" />
+          <img src={userDetails?.profilePicture} alt="profilpicture" className="profil_header_photo" />
+          <div className="profil_infos">
+            <div className="profil_header_name">{`${userDetails?.firstName} ${userDetails?.name}`}
+              <Badge fontSize={"25px"} margin={"0 35px 0 10px"} statut={userDetails?.isAdmin} />
 
-              {isEditable && isEditing === false ?
-                <button className='profil_header_button' onClick={() => setIsEditing(true)}><Edit /></button>
-                :
-                isEditable && isEditing === true
-                  ?
-                  <><button className='profil_header_button' onClick={() => setIsEditing(false)}><Close /></button> <button className='profil_header_button' onClick={() => sendAndClose()}><Check /></button></>
+              <div className='profil_actions'>
+
+                {isEditable && isEditing === false ?
+                  <button className='profil_header_button' onClick={() => setIsEditing(true)}><Edit /></button>
                   :
-                  null
-              } {
-                myProfile?._id === id
-                  ?
-                  null
-                  :
-                  isSending ?
-                    <button className='profil_header_button' onClick={DeleteRequest} id='cancel'>Pending... </button>
+                  isEditable && isEditing === true
+                    ?
+                    <><button className='profil_header_button' onClick={() => setIsEditing(false)}><Close /></button> <button className='profil_header_button' onClick={() => sendAndClose()}><Check /></button></>
                     :
-                    isPending ?
-                      <>
-                        <button className='profil_header_button' onClick={AcceptRequest}>Accept</button>
-                        <button className='profil_header_button' onClick={DeclineRequest}>Decline</button>
-                      </>
+                    null
+                } {
+                  myProfile?._id === id
+                    ?
+                    null
+                    :
+                    isSending ?
+                      <button className='profil_header_button' onClick={DeleteRequest} id='cancel'>Pending... </button>
                       :
-                      !isFriend
-                        ?
-                        <button className='profil_header_button' onClick={addRemoveFriend}><PersonAdd /></button>
+                      isPending ?
+                        <>
+                          <button className='profil_header_button' onClick={AcceptRequest}>Accept</button>
+                          <button className='profil_header_button' onClick={DeclineRequest}>Decline</button>
+                        </>
                         :
-                        <button className='profil_header_button' onClick={addRemoveFriend}><PersonRemove /></button>} </div>
+                        !isFriend
+                          ?
+                          <button className='profil_header_button' onClick={addRemoveFriend}><PersonAdd /></button>
+                          :
+                          <button className='profil_header_button' onClick={addRemoveFriend}><PersonRemove /></button>} </div>
+            </div>
+            <div className="profil_header_stats">{friendsList.length} friend(s)</div>
+            {isEditing ? <><span>Profil picture(link only):</span> <input type="text" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} /></> : null}
+            {isEditing ? <><span>Description:</span><input type="text" value={description} onChange={(e) => setDescription(e.target.value)} /></> : <div className="profil_header_description">{userDetails?.desc}</div>}
+            {isEditing ? <><span>Cover picture(link only):</span><input type="text" value={backgroundPicture} onChange={(e) => setBackgroundPicture(e.target.value)} /></> : null}
+            {isEditing ? <div style={{ display: "flex", gap: "5px" }}><span>Private account:</span><input type='checkbox' checked={isPrivate} onChange={handleCheckboxChange} /></div> : null}
           </div>
-          <div className="profil_header_stats">{friendsList.length} friend(s)</div>
-          {isEditing ? <><span>Profil picture(link only):</span> <input type="text" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} /></> : null}
-          {isEditing ? <><span>Description:</span><input type="text" value={description} onChange={(e) => setDescription(e.target.value)} /></> : <div className="profil_header_description">{userDetails?.desc}</div>}
-          {isEditing ? <><span>Cover picture(link only):</span><input type="text" value={backgroundPicture} onChange={(e) => setBackgroundPicture(e.target.value)} /></> : null}
         </div>
-      </div>
+        :
+        <Error error={404} />
+      }
     </div>
   )
 }
