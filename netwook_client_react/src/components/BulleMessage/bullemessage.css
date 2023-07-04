@@ -1,0 +1,33 @@
+.conversation_last_message {
+    background-color: gainsboro;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    flex-direction: row-reverse;
+}
+
+.conversation_last_message_right {
+    background-color: rgb(54, 129, 170);
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    flex-direction: row-reverse;
+    color: white
+}
+
+.conversation_header_right_part{
+    display: flex;
+    flex-direction: column;
+}
+
+.conversation_header_right_right_part{
+    display: flex;
+    flex-direction: column;
+}
+
+.conversation_hour{
+    font-size: 12px;
+    color: gray;
+}
