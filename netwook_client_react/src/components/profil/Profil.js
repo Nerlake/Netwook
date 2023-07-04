@@ -8,7 +8,7 @@ import Badge from '../badge/Badge'
 import { updateUser } from '../../redux/userSlice'
 
 
-export default function Profil({ userId, type }) {
+export default function Profil({ userId, type, setIsPrivate, isPrivate, isFriend, setIsFriend }) {
 
   const myProfile = useSelector((state) => state.user)
 
@@ -17,7 +17,7 @@ export default function Profil({ userId, type }) {
 
   const [userDetails, setUserDetails] = useState(undefined)
   const [friendsList, setFriendsList] = useState([])
-  const [isFriend, setIsFriend] = useState(false);
+
   const [isEditing, setIsEditing] = useState(false)
   const [description, setDescription] = useState("")
   const [backgroundPicture, setBackgroundPicture] = useState("")
@@ -40,6 +40,7 @@ export default function Profil({ userId, type }) {
         setProfilePicture(res.data.profilePicture)
         setIsSending(res.data.friendsRequestReceived.includes(myProfile?._id))
         setIsPending(res.data.friendsRequestSent.includes(myProfile?._id))
+        setIsPrivate(res.data.isPrivate)
       }
       )
       .catch(err => console.log(err))
@@ -84,7 +85,7 @@ export default function Profil({ userId, type }) {
   }
 
   function sendAndClose() {
-    api.put('/api/users/' + id, { desc: description, coverPicture: backgroundPicture, profilePicture: profilePicture })
+    api.put('/api/users/' + id, { desc: description, coverPicture: backgroundPicture, profilePicture: profilePicture, isPrivate: isPrivate })
       .then(res => {
         setIsEditing(false)
         getProfil()
@@ -134,6 +135,9 @@ export default function Profil({ userId, type }) {
       .catch((err) => console.log(err))
   }
 
+  const handleCheckboxChange = (event) => {
+    setIsPrivate(event.target.checked);
+  };
 
 
 
@@ -181,6 +185,7 @@ export default function Profil({ userId, type }) {
           {isEditing ? <><span>Profil picture(link only):</span> <input type="text" value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} /></> : null}
           {isEditing ? <><span>Description:</span><input type="text" value={description} onChange={(e) => setDescription(e.target.value)} /></> : <div className="profil_header_description">{userDetails?.desc}</div>}
           {isEditing ? <><span>Cover picture(link only):</span><input type="text" value={backgroundPicture} onChange={(e) => setBackgroundPicture(e.target.value)} /></> : null}
+          {isEditing ? <div style={{ display: "flex", gap: "5px" }}><span>Private account:</span><input type='checkbox' checked={isPrivate} onChange={handleCheckboxChange} /></div> : null}
         </div>
       </div>
     </div>
