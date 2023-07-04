@@ -37,15 +37,15 @@ const UserSchema = mongoose.Schema({
         type: String,
         default: "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg",
     },
-    followers: {
-        type: Array,
-        default: [],
-    },
-    followings: {
-        type: Array,
-        default: [],
-    },
     friends: {
+        type: Array,
+        default: [],
+    },
+    friendsRequestReceived: {
+        type: Array,
+        default: [],
+    },
+    friendsRequestSent: {
         type: Array,
         default: [],
     },

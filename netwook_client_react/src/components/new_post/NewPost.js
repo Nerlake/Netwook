@@ -17,7 +17,7 @@ export default function NewPost({ posts, setPosts }) {
       return
     }
     api.post("/api/posts", {
-      desc: post
+      desc: post,
     }
     )
       .then(res => {

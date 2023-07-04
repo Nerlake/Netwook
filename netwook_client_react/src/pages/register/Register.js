@@ -9,8 +9,10 @@ export default function Register() {
 
   const dispatch = useDispatch()
 
+  const [errorMessage, setErrorMessage] = useState()
+
   const [userInfos, setUserInfos] = useState({
-    // username: '',
+    username: '',
     firstName: '',
     name: '',
     email: '',
@@ -27,6 +29,7 @@ export default function Register() {
       })
       .catch(err => {
         console.log(err);
+        setErrorMessage(err.response.data);
       }
       );
   }
@@ -37,12 +40,13 @@ export default function Register() {
         <div className="register_logo">Sociamix</div>
         <p className='register_description'>Welcome to your social network</p>
         <div className="register_form">
-          {/* <input type="text" placeholder='Username' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, username: e.currentTarget.value })} /> */}
+          <input type="text" placeholder='Username' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, username: e.currentTarget.value })} />
           <input type="text" placeholder='First name' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, firstName: e.currentTarget.value })} />
           <input type="text" placeholder='Name' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, name: e.currentTarget.value })} />
           <input type="text" placeholder='Email' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, email: e.currentTarget.value })} />
           <input type="password" placeholder='Password' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, password: e.currentTarget.value })} />
           <input type="password" placeholder='Repeat password' className='register_input' onKeyUp={(e) => setUserInfos({ ...userInfos, passwordRepeat: e.currentTarget.value })} />
+          <span style={{ color: "white" }}>{errorMessage}</span>
           <button className='register_button' onClick={register}>Register</button>
           <Link to={"/login"} className="link"><span className='register_signup_button'>Already have an accout? Log in</span></Link>
         </div>

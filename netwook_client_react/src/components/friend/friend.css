@@ -37,6 +37,15 @@
     
 }
 
+.friend_actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+}
+
 .friend_button{
     background-color: inherit;
     border: none;

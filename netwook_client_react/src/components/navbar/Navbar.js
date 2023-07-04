@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './navbar.css'
 import leo from '../../assets/leo.jpg'
-import { Chat, Logout, Map, Message, Notifications } from '@mui/icons-material'
+import { Chat, Group, Logout, Map, Message, Notifications } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeConversation, removeUser } from '../../redux/userSlice'
@@ -72,6 +72,7 @@ export default function Navbar() {
           <Link to={"/"} className="link"> <a className="navbar_menu_item">Feed</a></Link>
           {/* <Link to={"/"} className="link"><a className="navbar_menu_item"><Notifications/></a></Link> */}
           <Link to={"/map"} className="link"><a className="navbar_menu_item"><Map /></a></Link>
+          <Link to={"/friendsRequests"} className="link"><a className="navbar_menu_item"><Group /></a></Link>
           <Link to={"/messages"} className="link"><a className="navbar_menu_item"><Message /></a></Link>
           <Link to={"/login"} className="link" onClick={() => {
             dispatch(removeUser())

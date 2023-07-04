@@ -4,22 +4,10 @@ import './friendslist.css'
 import api from '../../api/api'
 import { useSelector } from 'react-redux'
 
-export default function FriendsList() {
+export default function FriendsList({ friendsList, setFriendsList }) {
 
   // recupération de user dans redux
   const userDetails = useSelector((state) => state.user)
-  const [friendsList, setFriendsList] = useState()
-
-  useEffect(() => {
-    api.get('/api/users/friends/' + userDetails?._id)
-      .then(res => {
-        console.log(res.data)
-        setFriendsList(res.data)
-      })
-      .catch(err => console.log(err))
-  }, [userDetails])
-
-
 
 
   return (

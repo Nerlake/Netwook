@@ -28,10 +28,11 @@
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 10px;
+    
 }
 
 .profil_header_button{
-    width: 60px;
+    width: 80px;
     height: 30px;
     color: white;
     background-color: #363999;
@@ -47,4 +48,16 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+}
+
+.profil_actions{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 20px;
+    gap: 10px
+}
+
+#cancel:hover{
+    background-color: #ff0000;
 }

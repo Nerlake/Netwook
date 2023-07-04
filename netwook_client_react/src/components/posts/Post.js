@@ -93,7 +93,13 @@ export default function Post({ post, setPosts, posts }) {
             <div className="post_container">
                 <div className="post_header">
                     <div className="post_header_left">
-                        <img src={post.profilePicture} alt="profilpicture" className="post_image" />
+                        {
+                            post?.userId === userDetails?._id ?
+                                <img src={userDetails?.profilePicture} alt="profilpicture" className="post_image" />
+                                :
+                                <img src={post.profilePicture} alt="profilpicture" className="post_image" />
+                        }
+
 
                         <div className="post_header_info">
                             <Link to={"/" + post?.userId} className="link"><span className='post_username'>{`${post.firstName} ${post.name}`}</span>   <Badge fontSize={"16px"} statut={post?.isAdmin} />             </Link>

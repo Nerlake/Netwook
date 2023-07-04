@@ -15,20 +15,6 @@ const auth = require('./middleware/auth');
 // const http = require('http');
 const upload = multer({ dest: 'images/' }); // Définissez le dossier de destination pour les téléchargements
 
-// // Socket.io
-// const socketIO = require('socket.io');
-// const server = http.createServer(app);
-// const io = socketIO(server);
-
-
-
-// io.on('connection', (socket) => {
-//     // console.log('Nouvelle connexion socket :', socket.id);
-//     socket.emit("welcome", "Bienvenue sur le serveur de Netwook");
-//     // socket.on('disconnect', () => {
-// });
-
-
 
 const port = process.env.PORT || 8000;
 

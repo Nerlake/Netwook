@@ -83,13 +83,13 @@ export default function Message({ userId }) {
 
     }, [user?._id, recipient?._id])
 
-    useEffect(() => {
-        //scroll to bottom
-        const conversation_container = document.querySelector('.conversation_container')
-        if (conversation_container !== null) {
-            conversation_container.scrollTop = conversation_container.scrollHeight;
-        }
-    }, [conversation])
+    // useEffect(() => {
+    //     //scroll to bottom
+    //     const conversation_container = document.querySelector('.conversation_container')
+    //     if (conversation_container !== null) {
+    //         conversation_container.scrollTop = conversation_container.scrollHeight;
+    //     }
+    // }, [conversation])
 
 
     // relance la requete de recupération des messages toutes les 2 secondes
