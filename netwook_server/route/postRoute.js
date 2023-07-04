@@ -170,6 +170,27 @@ router.get("/profile/:id", async (req, res) => {
     }
 })
 
+
+// GET LAST POST BY USER
+router.get("/last/:id", async (req, res) => {
+    try {
+        const posts = await Post.find({ userId: req.params.id })
+        // prend le dernier post
+        const lastPost = posts[posts.length - 1];
+        var user = await User.findById(req.params.id);
+        var lastPostObject = lastPost.toObject();
+        lastPostObject.profilePicture = user.profilePicture;
+        lastPostObject.firstName = user.firstName;
+        lastPostObject.name = user.name;
+        // le renvoie
+        res.status(200).json(lastPostObject)
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
+
+
 // ajouter un commentaire
 router.put("/:id/comment", async (req, res) => {
     try {

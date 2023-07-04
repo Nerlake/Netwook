@@ -71,7 +71,7 @@ export default function Navbar() {
         <div className="navbar_list_menu">
           <Link to={"/"} className="link"> <a className="navbar_menu_item">Feed</a></Link>
           {/* <Link to={"/"} className="link"><a className="navbar_menu_item"><Notifications/></a></Link> */}
-          <Link to={"/map"} className="link"><a className="navbar_menu_item"><Map /></a></Link>
+          {/* <Link to={"/map"} className="link"><a className="navbar_menu_item"><Map /></a></Link> */}
           <Link to={"/friendsRequests"} className="link"><a className="navbar_menu_item"><Group /></a></Link>
           <Link to={"/messages"} className="link"><a className="navbar_menu_item"><Message /></a></Link>
           <Link to={"/login"} className="link" onClick={() => {

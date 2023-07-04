@@ -34,7 +34,7 @@ export default function RouterPage() {
         { path: '/profil', element: isLogged ? <ProfilPage userId={myProfile?._id} /> : <SignIn /> },
         { path: '/login', element: !isLogged ? <SignIn /> : <App /> },
         { path: '/register', element: !isLogged ? <Register /> : <App /> },
-        { path: '/map', element: isLogged ? <Map /> : <SignIn /> },
+        // { path: '/map', element: isLogged ? <Map /> : <SignIn /> },
         { path: "/messages", element: isLogged ? <Messages /> : <SignIn /> },
         { path: "/friendsRequests", element: isLogged ? <FriendsRequests /> : <SignIn /> },
         { path: '*', element: <div>404</div> },

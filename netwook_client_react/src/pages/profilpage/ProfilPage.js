@@ -5,8 +5,12 @@ import Profil from '../../components/profil/Profil'
 import './profilpage.css'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { LockRounded } from '@mui/icons-material'
+import Post from '../../components/posts/Post'
+import api from '../../api/api'
 
 export default function ProfilPage({ userId }) {
+
 
 
   const [isPrivate, setIsPrivate] = useState(false)
@@ -36,6 +40,7 @@ function DisplayFeed({ isPrivate, myProfile, isFriend }) {
   // recupération de l'id de l'url
   const { id } = useParams();
 
+
   if (isPrivate && (isFriend || myProfile._id === id)) {
     console.log("private / friend or my profile");
     return (
@@ -55,8 +60,10 @@ function DisplayFeed({ isPrivate, myProfile, isFriend }) {
 
   else {
     return (
-      <div>
+      <div className='private_container'>
         <h3>This account is private</h3>
+        <LockRounded />
+        <h5>Add this person as a friend to discover this content</h5>
       </div>
     )
   }
